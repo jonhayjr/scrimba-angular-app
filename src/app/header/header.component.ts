@@ -6,7 +6,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  @Input() title:string | undefined;
+  @Input() title: string | undefined;
+  
   constructor() { }
 
   ngOnInit(): void {
