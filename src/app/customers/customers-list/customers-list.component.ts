@@ -26,4 +26,12 @@ export class CustomersListComponent implements OnInit {
     });
   }
 
+  sortBy(prop: string) {
+    const sortedCustomers = this.filteredCustomers.sort((a: ICustomer, b: ICustomer) => {
+      return a[prop] > b[prop] ? 1 : -1;
+    })
+
+    this.filteredCustomers = sortedCustomers;
+  }
+
 }
