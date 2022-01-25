@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { ICustomer } from '../../shared/interfaces';
 @Component({
@@ -7,14 +7,23 @@ import { ICustomer } from '../../shared/interfaces';
   styleUrls: []
 })
 export class CustomersListComponent implements OnInit {
-
-filteredCustomers: ICustomer[] = [];
-customersOrderTotal!: number;
-currencyCode: string = 'USD';
+  @Input() customers: ICustomer[]= [];
+  filteredCustomers!: ICustomer[];
+  customersOrderTotal!: number;
+  currencyCode: string = 'USD';
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.filteredCustomers = this.customers;
+    this.calculateOrders();
+  }
+
+  calculateOrders() {
+    this.customersOrderTotal = 0;
+    this.filteredCustomers.forEach((cust: ICustomer) => {
+        this.customersOrderTotal += cust.orderTotal || 0;
+    });
   }
 
 }
