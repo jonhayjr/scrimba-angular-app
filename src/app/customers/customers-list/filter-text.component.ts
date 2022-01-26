@@ -3,24 +3,26 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 @Component({
     selector: 'app-filter-textbox',
     template: `
-        Filters: <input type="text" [(ngModel)]="filter"/>
+        Filters: <input type="text" [(ngModel)]="filter" (ngModelChange)="handleChange()"/>
     `
 })
 
 export class FilterTextboxComponent implements OnInit {
 
-    private _filter: any;
-    @Input() get filter() {
-        return this._filter;
-    }
+    filter!:string;
     
-    set filter(val: string) { 
-        this._filter = val;
-        this.changed.emit(this.filter); //Raise changed event
-    }
-
+    @Input() initialFilter?: string | '';
+    
     @Output() changed: EventEmitter<string> = new EventEmitter<string>();
 
     constructor(){}
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        if (this.initialFilter) {
+            this.filter = this.initialFilter;
+        }
+    }
+
+    handleChange() {
+        this.changed.emit(this.filter);
+    }
 }
